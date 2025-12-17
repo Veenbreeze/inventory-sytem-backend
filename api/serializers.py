@@ -39,15 +39,15 @@ class StockMovementSerializer(serializers.ModelSerializer):
         model = StockMovement
         fields = ['id', 'product', 'product_id', 'change', 'reason', 'note', 'created_by', 'created_at']
         read_only_fields = ['created_by', 'created_at']
-
+ 
 class SignupSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
     email = serializers.EmailField(required=True)
-    password = serializers.CharField(write_only=True, min_length=6)
+    password = serializers.CharField(write_only=True, min_length=12)
 
     def validate_email(self, value):
         if User.objects.filter(email__iexact=value).exists():
-            raise serializers.ValidationError("A user with that email already exists.")
+            raise serializers.ValidationError("A user with that email already exists,put another one.")
         return value
 
     def create(self, validated_data):
